@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>True Fitness</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen" class="splash">
+      <div class="logo-circle">
+        <span class="logo-tf">TF</span>
+      </div>
+      <h1 class="brand-title">True Fitness</h1>
+      <p class="brand-sub">Potencia tu Cuerpo, Impulsa tu Alma</p>
+    </div>
+
+    <!-- HEADER SUPERIOR -->
+    <header class="top-bar">
+      <button id="btn-menu" class="icon-btn" aria-label="Menú">☰</button>
+      <div class="brand-header">
+        <span class="mini-logo">TF</span>
+        <span class="brand-name">True Fitness</span>
+      </div>
+      <div class="header-spacer"></div>
+    </header>
+
+    <!-- CONTENIDO DE PANTALLAS -->
+    <main class="screens-container">
+      
+      <!-- 1. PANTALLA INICIO -->
+      <section id="screen-inicio" class="screen active">
+        <h2 class="greeting">¡Hola, <span id="user-name-display">Atleta</span>! 👋</h2>
+
+        <div class="hero-card">
+          <div class="hero-text">
+            <h3>Empecemos tu Entrenamiento ¡Vamos!</h3>
+            <button class="btn-primary" onclick="cambiarPantalla('entrenos')">
+              Iniciar Rutina →
+            </button>
+          </div>
+          <div class="hero-badge">💪</div>
+        </div>
+
+        <div class="quick-grid">
+          <button class="quick-item" onclick="cambiarPantalla('entrenos')">
+            <span class="q-icon">📋</span>
+            <span>Planes</span>
+          </button>
+          <button class="quick-item" onclick="cambiarPantalla('perfil')">
+            <span class="q-icon">📈</span>
+            <span>Progresión</span>
+          </button>
+          <button class="quick-item" onclick="cambiarPantalla('nutricion')">
+            <span class="q-icon">🥗</span>
+            <span>Nutrición</span>
+          </button>
+          <button class="quick-item" onclick="alert('¡Próximamente retos con amigos!')">
+            <span class="q-icon">👥</span>
+            <span>Comunidad</span>
+          </button>
+        </div>
+
+        <h3 class="section-title">Tu Progreso</h3>
+        <div class="progress-card">
+          <div class="progress-stats">
+            <div>
+              <span class="big-num" id="inicio-calorias">650</span>
+              <p class="stat-label">Calorías de Hoy</p>
+            </div>
+            <div class="text-right">
+              <span class="week-label">Semana</span>
+              <p class="days-num"><span id="dias-completados">4</span>/5 Días</p>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="barra-dias" style="width: 80%;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. PANTALLA ENTRENOS -->
+      <section id="screen-entrenos" class="screen">
+        <h2 class="screen-heading">Mis Entrenamientos</h2>
+        <p class="screen-sub">Elige tu Plan de Entrenamiento</p>
+
+        <div class="plans-row">
+          <div class="plan-card" onclick="seleccionarPlan('Definición Muscular', '45 Min. / Nivel Intermedio')">
+            <div class="plan-icon">🔥</div>
+            <h4>Definición Muscular</h4>
+            <span>4 Semanas</span>
+            <button class="btn-chip">Empezar</button>
+          </div>
+          <div class="plan-card" onclick="seleccionarPlan('Full Body QuemaGrasa', '35 Min. / Todos los niveles')">
+            <div class="plan-icon">⚡</div>
+            <h4>Full Body QuemaGrasa</h4>
+            <span>3 Semanas</span>
+            <button class="btn-chip">Empezar</button>
+          </div>
+          <div class="plan-card" onclick="seleccionarPlan('Fuerza y Potencia', '50 Min. / Nivel Avanzado')">
+            <div class="plan-icon">🏋️</div>
+            <h4>Fuerza y Potencia</h4>
+            <span>5 Semanas</span>
+            <button class="btn-chip">Ver Plan</button>
+          </div>
+        </div>
+
+        <div class="workout-today-card">
+          <span class="tag-pill">Entrenamiento del Día</span>
+          <h3 id="plan-activo-titulo">Rutina de Pecho y Tríceps</h3>
+          <p id="plan-activo-meta">45 Min. / Nivel Intermedio</p>
+          
+          <form id="form-ejercicio" class="inline-form">
+            <input type="text" id="input-nombre" placeholder="Ejercicio (ej. Flexiones)" required>
+            <input type="text" id="input-series" placeholder="4x12" required>
+            <button type="submit" class="btn-dark">+</button>
+          </form>
+          <ul id="lista-ejercicios" class="exercise-list"></ul>
+        </div>
+      </section>
+
+      <!-- 3. PANTALLA NUTRICIÓN -->
+      <section id="screen-nutricion" class="screen">
+        <h2 class="screen-heading">Nutrición</h2>
+        <div class="nutri-banner">
+          <div>
+            <h3>Mejora tu Alimentación</h3>
+            <p>Tu Plan: <strong>Pérdida de Grasa</strong></p>
+          </div>
+          <span class="nutri-emoji">🥗</span>
+        </div>
+
+        <h3 class="section-title">Contador de Calorías</h3>
+        <div class="calorie-card">
+          <div class="calorie-display">
+            <span class="cal-current" id="calorias-actuales">1100</span>
+            <span class="cal-unit">kcal</span>
+            <p class="cal-goal">Meta: <span id="calorias-meta">2100</span> kcal</p>
+          </div>
+          <div class="calorie-controls">
+            <input type="number" id="input-comida-cal" placeholder="Calorías (ej. 350)" min="1">
+            <button class="btn-primary" onclick="registrarComida()">Registrar Comida</button>
+          </div>
+        </div>
+
+        <h3 class="section-title">Tips de Nutrición</h3>
+        <div class="tip-card">
+          <span class="tip-icon">🥕</span>
+          <div>
+            <h4>Snacks Saludables</h4>
+            <p>Opciones rápidas y nutritivas altas en proteína para controlar el apetito.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. PANTALLA PERFIL -->
+      <section id="screen-perfil" class="screen">
+        <div class="profile-header">
+          <div class="avatar">TF</div>
+          <div>
+            <h2 id="perfil-nombre">Usuario</h2>
+            <span class="badge-level">Nivel: Intermedio</span>
+            <p class="quote">“Potencia tu Cuerpo, Impulsa tu Alma”</p>
+          </div>
+        </div>
+
+        <div class="stats-box">
+          <h3>Estadísticas Personales</h3>
+          <div class="stats-grid">
+            <div class="stat-col">
+              <span class="s-label">Peso</span>
+              <strong id="stat-peso">75 kg</strong>
+            </div>
+            <div class="stat-col">
+              <span class="s-label">Altura</span>
+              <strong id="stat-altura">1.78 m</strong>
+            </div>
+            <div class="stat-col">
+              <span class="s-label">Edad</span>
+              <strong id="stat-edad">32</strong>
+            </div>
+            <div class="stat-col">
+              <span class="s-label">IMC</span>
+              <strong id="stat-imc">23.7</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="action-row" onclick="editarPerfil()">✏️ Editar Peso / Altura / Nombre</button>
+          <button class="action-row" onclick="alert('Recordatorios diarios activados a las 8:00 AM')">🔔 Notificaciones</button>
+          <button class="action-row" onclick="cambiarPantalla('entrenos')">🏋️ Preferencias de Entreno</button>
+          <button class="action-row danger" onclick="reiniciarDatos()">🚪 Reiniciar Datos</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-target="inicio" onclick="cambiarPantalla('inicio')">
+        <span class="nav-icon">🏠</span>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-btn" data-target="entrenos" onclick="cambiarPantalla('entrenos')">
+        <span class="nav-icon">🏋️</span>
+        <span>Entrenos</span>
+      </button>
+      <button class="nav-btn" data-target="nutricion" onclick="cambiarPantalla('nutricion')">
+        <span class="nav-icon">🍎</span>
+        <span>Nutrición</span>
+      </button>
+      <button class="nav-btn" data-target="perfil" onclick="cambiarPantalla('perfil')">
+        <span class="nav-icon">👤</span>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+</script>
+</body>
+</html>
